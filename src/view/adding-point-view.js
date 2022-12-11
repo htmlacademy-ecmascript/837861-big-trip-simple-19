@@ -319,7 +319,7 @@ const markUp = `<ul class="trip-events__list">
 
 const createNewFilterTemplate = () => markUp;
 
-export default class NewPointAddingView {
+export default class AddingPointView {
   getTemplate = () => createNewFilterTemplate();
 
   getElement = () => {

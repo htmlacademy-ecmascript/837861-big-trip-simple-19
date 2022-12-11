@@ -150,7 +150,7 @@ const markUp = `<li class="trip-events__item">
 
 const createNewSortingTemplate = () => markUp;
 
-export default class NewFormEditView {
+export default class EditFormView {
   getTemplate = () => createNewSortingTemplate();
 
   getElement = () => {

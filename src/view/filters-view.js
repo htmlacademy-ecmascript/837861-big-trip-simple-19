@@ -16,7 +16,7 @@ const markUp = `<form class="trip-filters" action="#" method="get">
 
 const createNewFilterTemplate = () => markUp;
 
-export default class NewFilterView {
+export default class FiltersView {
   getTemplate = () => createNewFilterTemplate();
 
   getElement = () => {

@@ -29,7 +29,7 @@ const markUp = `<form class="trip-events__trip-sort  trip-sort" action="#" metho
 
 const createNewSortingTemplate = () => markUp;
 
-export default class NewSortingView {
+export default class SortingView {
   getTemplate = () => createNewSortingTemplate();
 
   getElement = () => {

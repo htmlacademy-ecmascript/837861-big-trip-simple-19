@@ -1,19 +1,17 @@
-import NewFilterView from './view/filters-view.js';
-import NewSortingView from './view/sorting-view.js';
-import NewFormEditView from './view/edit-form-view.js';
-import NewPointAddingView from './view/adding-point-view';
-
-// import NewEventsListView from './view/point-list-view.js';
+import FiltersView from './view/filters-view.js';
+import SortingView from './view/sorting-view.js';
+import EditFormView from './view/edit-form-view.js';
+import AddingPointView from './view/adding-point-view.js';
+// import Presenter from '../src/presenter/presenter.js';
 import { render } from './render.js';
 
 const tripFilter = document.querySelector('.trip-controls__filters');
 const tripEventsSorting = document.querySelector('.trip-events');
-// const tripEventsSorting = document.querySelector('.trip-events');
+// const eventPresenter = new Presenter({ pointsContainer: tripEventsSorting });
 
-// render(new NewEventsListView(), tripEventsSorting);
-render(new NewFilterView(), tripFilter);
-render(new NewSortingView(), tripEventsSorting);
-render(new NewFormEditView(), tripEventsSorting);
-render(new NewPointAddingView(), tripEventsSorting);
+render(new FiltersView(), tripFilter);
+render(new SortingView(), tripEventsSorting);
+render(new EditFormView(), tripEventsSorting);
+render(new AddingPointView(), tripEventsSorting);
 
-
+// eventPresenter.init();
