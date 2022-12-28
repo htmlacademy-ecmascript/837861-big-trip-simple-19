@@ -25,7 +25,8 @@ const markUp = `<form class="trip-events__trip-sort  trip-sort" action="#" metho
   <input id="sort-offer" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-offer" disabled>
   <label class="trip-sort__btn" for="sort-offer">Offers</label>
 </div>
-</form>)`;
+
+</form>`;
 
 const createNewSortingTemplate = () => markUp;
 
