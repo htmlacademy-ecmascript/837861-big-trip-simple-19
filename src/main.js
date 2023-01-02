@@ -1,17 +1,16 @@
-import FilterView from './view/filter-view.js';
-import { render } from './render.js';
-import BoardPresenter from './presenter/board-presenter.js';
+import TripPresenter from './presenter/trip-presenter.js';
 import PointsModel from './model/points-model.js';
-
-
-const filterContainerElement = document.querySelector('.trip-controls__filters');
-const mainContentElement = document.querySelector('.trip-events');
+// Контейнер для фильтров
+const headerElement = document.querySelector('.trip-controls');
+// Контейнер для отрисовки
+const tripEventsElement = document.querySelector('.trip-events');
+// Модель
 const pointsModel = new PointsModel();
-const boardPresenter = new BoardPresenter({
-  boardContainer: mainContentElement,
-  pointsModel,
+// Новый презентер с параметрами
+const tripPresenter = new TripPresenter({
+  boardContainer: tripEventsElement,
+  filterContainer: headerElement,
+  pointsModel
 });
 
-render(new FilterView(), filterContainerElement);
-
-boardPresenter.init();
+tripPresenter.init();

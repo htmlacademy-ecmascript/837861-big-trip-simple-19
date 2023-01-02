@@ -1,28 +1,26 @@
-// import AbstractView from '../framework/view/abstract-view.js';
-
-// function createTripListTemplate() {
-//   return '<ul class="trip-events__list"></ul>';
-// }
-// createTripListTemplate();
-
-// export default class TripListView extends AbstractView {
-//   get template() {
-//     return createTripListTemplate();
-//   }
-// }
-
+import {createElement} from '../render.js';
 
 function createTripListTemplate() {
-  return `<ul class="trip-events__list">
-  <li>1</li>
-  <li>2</li>
-  <li>3</li>
-  </ul>`;
+  return (
+    `<ul class="trip-events__list">
+    </ul>`
+  );
 }
-createTripListTemplate();
 
 export default class TripListView {
-  get template() {
+  getTemplate() {
     return createTripListTemplate();
+  }
+
+  getElement() {
+    if (!this.element) {
+      this.element = createElement(this.getTemplate());
+    }
+
+    return this.element;
+  }
+
+  removeElement() {
+    this.element = null;
   }
 }
