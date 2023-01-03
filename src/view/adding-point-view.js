@@ -25,7 +25,7 @@
 
 import { createElement } from '../render.js';
 
-const markUp = `<ul class="trip-events__list">
+const markUp = `
 <li class="trip-events__item">
   <div class="event">
     <time class="event__date" datetime="2019-03-18">MAR 18</time>
@@ -314,8 +314,7 @@ const markUp = `<ul class="trip-events__list">
       <span class="visually-hidden">Open event</span>
     </button>
   </div>
-</li>
-</ul>`;
+</li>`;
 
 const createNewFilterTemplate = () => markUp;
 
