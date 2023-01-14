@@ -141,22 +141,24 @@ function createPointEditTemplate(data) {
 }
 
 export default class PointEditView {
+  #element = null;
+
   constructor(data) {
     this.data = data;
   }
 
-  getTemplate() {
+  get template() {
     return createPointEditTemplate(this.data);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.element = createElement(this.template);
     }
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

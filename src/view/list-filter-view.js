@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import { createElement } from '../render.js';
 
 // Функция для создания шаблона
 // Шаблон скопирован из разметки файла list-filter.html, заголовок Filter events
@@ -20,24 +20,25 @@ function createListFilterTemplate() {
 
 // Экспортируем класс
 export default class ListFilterView {
+  #element = null;
   // Возвращаем разметку шаблона
-  getTemplate() {
+  get template() {
     return createListFilterTemplate();
   }
 
   // Создаем элемент
-  getElement() {
+  get element() {
     // Если свойство элемент не заполнено
-    if (!this.element) {
+    if (!this.#element) {
       // Мы заполняем свойство результатом createElement
-      this.element = createElement(this.getTemplate());
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   // Предусматриваем метод для удаления элемента
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

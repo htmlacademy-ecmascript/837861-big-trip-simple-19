@@ -26,7 +26,7 @@ export default class TripPresenter {
 
   init() {
     // Точки на основании модели
-    this.listPoints = [...this.pointsModel.getPoints()];
+    this.listPoints = [...this.pointsModel.points];
     // Фильтры отрисовываем в контейнер для фильтров
     render(new ListFilterView(), this.filterContainer);
     // Затем сортировка в Контейнер для отрисовки
@@ -34,12 +34,12 @@ export default class TripPresenter {
     // Затем TripListView добаляем в Контейнер для отрисовки (передадим в main)
     render(this.tripListComponent, this.boardContainer);
     // Добавляем форму создания в TripListView
-    render(new NewPointView(), this.tripListComponent.getElement(), RenderPosition.AFTERBEGIN);
+    render(new NewPointView(), this.tripListComponent.element, RenderPosition.AFTERBEGIN);
     // Точку маршрута рисуем три раза
     for (let i = 0; i < this.listPoints.length; i++) {
-      render(new PointView({point: this.listPoints[i]}), this.tripListComponent.getElement());
+      render(new PointView({ point: this.listPoints[i] }), this.tripListComponent.element);
     }
     // Добавляем форму редактирования в TripListView
-    render(new EditPointView(this.listPoints[0]), this.tripListComponent.getElement(), RenderPosition.AFTERBEGIN);
+    render(new EditPointView(this.listPoints[0]), this.tripListComponent.element, RenderPosition.AFTERBEGIN);
   }
 }
