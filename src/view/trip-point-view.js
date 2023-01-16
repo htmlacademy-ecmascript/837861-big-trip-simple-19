@@ -62,13 +62,14 @@ const createPointTemplate = (point) => {
 
 export default class PointView {
   #element = null;
+  #point = null;
 
   constructor({ point }) {
-    this.point = point;
+    this.#point = point;
   }
 
   get template() {
-    return createPointTemplate(this.point);
+    return createPointTemplate(this.#point);
   }
 
   get element() {
