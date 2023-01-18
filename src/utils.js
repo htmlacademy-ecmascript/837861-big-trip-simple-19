@@ -10,4 +10,6 @@ const humanizeDate = (dueDate) => dueDate ? dayjs(dueDate).format(DATE_FORMAT) :
 
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-export { getRandomArrayElement, getRandomNumber, humanizeDate, capitalizeFirstLetter };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomArrayElement, getRandomNumber, humanizeDate, capitalizeFirstLetter, isEscapeKey };

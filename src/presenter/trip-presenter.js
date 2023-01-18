@@ -58,9 +58,11 @@ import EditPointView from '../view/edit-point-view.js';
 // Точка маршрута
 import PointView from '../view/trip-point-view.js';
 // Фильтры
-import ListFilterView from '../view/list-filter-view.js';
+// import ListFilterView from '../view/list-filter-view.js';
 // Форма создания
 import NewPointView from '../view/new-point-view.js';
+// Функция для определения истинности нажатия Escape
+import { isEscapeKey } from '../utils.js';
 
 
 export default class TripPresenter {
@@ -100,30 +102,29 @@ export default class TripPresenter {
 
     const pointRollupButton = pointComponent.element.querySelector('.event__rollup-btn');
     const editPointForm = pointEditComponent.element.querySelector('form');
-    const editRollupButton = pointEditComponent.element.querySelector('event__rollup-btn');
+    // const editRollupButton = pointEditComponent.element.querySelector('event__rollup-btn');
 
     const replacePointToEditForm = () => {
       this.#pointListComponent.element.replaceChild(pointEditComponent.element, pointComponent.element);
-      editRollupButton.addEventListener('click', onCloseEditPointForm);
+      editPointForm.addEventListener('click', onCloseEditPointForm);
       editPointForm.addEventListener('submit', onCloseEditPointForm);
       document.addEventListener('keydown', onEscKeyDown);
-    }
+    };
 
     const replaceEditFormToPoint = () => {
       this.#pointListComponent.element.replaceChild(pointComponent.element, pointEditComponent.element);
-      editRollupButton.removeEventListener('click', onCloseEditPointForm);
+      editPointForm.removeEventListener('click', onCloseEditPointForm);
       editPointForm.removeEventListener('submit', onCloseEditPointForm);
       document.removeEventListener('keydown', onEscKeyDown);
-    }
+    };
 
     function onEscKeyDown(evt) {
-      if (isEscapeKey) {
-        onCloseEditPointForm(evt);
+      if (isEscapeKey(evt)) {
+        onCloseEditPointForm();
       }
     }
 
     function onCloseEditPointForm() {
-      evt.preventDefault();
       replaceEditFormToPoint();
     }
 
