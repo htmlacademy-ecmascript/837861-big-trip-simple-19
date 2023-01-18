@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 const DATE_FORMAT = 'DD/MM/YY HH:mm';
 
-const createEditPointTemplate = ({ point }) => {
+const createEditPointTemplate = (point) => {
   // Деструктурируем параметры
   const { type, offers, destination, basePrice, dateFrom, dateTo } = point;
   const pointTypeOffer = offersByTypes.find((offer) => offer.type === type);
@@ -94,12 +94,16 @@ const createEditPointTemplate = ({ point }) => {
   </li>`;
 };
 
-export default class EditPointView {
+export default class EditPointViewState {
   #element = null;
 
   constructor(point) {
     this.point = point;
+    console.log(this.#element.querySelector('.event__rollup-btn'));
   }
+  // #arrowButton() {
+
+  // }
 
   get template() {
     return createEditPointTemplate(this.point);
@@ -109,7 +113,6 @@ export default class EditPointView {
     if (!this.#element) {
       this.#element = createElement(this.template);
     }
-
     return this.#element;
   }
 
