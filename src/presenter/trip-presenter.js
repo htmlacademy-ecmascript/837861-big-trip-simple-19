@@ -1,54 +1,3 @@
-// import { render, RenderPosition } from '../render.js';
-
-// // Наш контейнер для отрисовки
-// import TripListView from '../view/trip-list-view.js';
-// // Контейнер для сортировки
-// import SortView from '../view/list-sort-view.js';
-// // Форма редактирования
-// import EditPointView from '../view/edit-point-view.js';
-// // Точка маршрута
-// import PointView from '../view/trip-point-view.js';
-// // Фильтры
-// import ListFilterView from '../view/list-filter-view.js';
-// // Форма создания
-// import NewPointView from '../view/new-point-view.js';
-
-
-// export default class TripPresenter {
-
-//   // Создаем новый контейнер ul
-//   tripListComponent = new TripListView();
-//   // Указываем параметры конструктору
-//   constructor({ boardContainer, filterContainer, pointsModel }) {
-//     this.boardContainer = boardContainer;
-//     this.filterContainer = filterContainer;
-//     this.pointsModel = pointsModel;
-//   }
-
-//   init() {
-//     // Точки на основании модели
-//     this.listPoints = [...this.pointsModel.points];
-//     // Фильтры отрисовываем в контейнер для фильтров
-//     render(new ListFilterView(), this.filterContainer);
-//     // Затем сортировка в Контейнер для отрисовки
-//     render(new SortView(), this.boardContainer);
-//     // Затем TripListView добаляем в Контейнер для отрисовки (передадим в main)
-//     render(this.tripListComponent, this.boardContainer);
-//     // Добавляем форму создания в TripListView
-//     render(new NewPointView(), this.tripListComponent.element, RenderPosition.AFTERBEGIN);
-//     // Точку маршрута рисуем три раза
-//     for (let i = 0; i < this.listPoints.length; i++) {
-//       render(new PointView({ point: this.listPoints[i] }), this.tripListComponent.element);
-//     }
-//     //
-//     // Добавляем форму редактирования в TripListView
-//     render(new EditPointView(this.listPoints[0]), this.tripListComponent.element, RenderPosition.AFTERBEGIN);
-//     // render(new EditPointViewState(this.listPoints[0]), this.tripListComponent.element, RenderPosition.AFTERBEGIN);
-//   }
-// }
-
-import { render, RenderPosition } from '../render.js';
-
 // Наш контейнер для отрисовки
 import TripListView from '../view/trip-list-view.js';
 // Контейнер для сортировки
@@ -61,9 +10,11 @@ import PointView from '../view/trip-point-view.js';
 // import ListFilterView from '../view/list-filter-view.js';
 // Форма создания
 import NewPointView from '../view/new-point-view.js';
+//Создайте новую точку
+import ListEmptyView from '../view/list-empty-view.js';
 // Функция для определения истинности нажатия Escape
 import { isEscapeKey } from '../utils.js';
-
+import { render, RenderPosition } from '../render.js';
 
 export default class TripPresenter {
   #pointListComponent = new TripListView();
@@ -84,9 +35,15 @@ export default class TripPresenter {
     this.#renderPointsList();
   }
 
+  // #renderPointsList() {
+  //   if (!this.#listPoints.length) {
+  //     render(new NewPointView(), this.#boardContainer);
+  //     return;
+  //   }
+
   #renderPointsList() {
     if (!this.#listPoints.length) {
-      render(new NewPointView(), this.#boardContainer);
+      render(new ListEmptyView(), this.#boardContainer);
       return;
     }
 
@@ -100,6 +57,7 @@ export default class TripPresenter {
     const pointComponent = new PointView({ point });
     const pointEditComponent = new EditPointView({ point });
 
+    // const tripEventsElement = document.querySelector('.trip-events');
     const pointRollupButton = pointComponent.element.querySelector('.event__rollup-btn');
     const editPointForm = pointEditComponent.element.querySelector('form');
     // const editRollupButton = pointEditComponent.element.querySelector('event__rollup-btn');

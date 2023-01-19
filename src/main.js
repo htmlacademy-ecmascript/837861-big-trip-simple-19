@@ -5,6 +5,7 @@ import PointsModel from './model/points-model.js';
 const headerElement = document.querySelector('.trip-controls');
 // Контейнер для отрисовки
 const tripEventsElement = document.querySelector('.trip-events');
+// const tripEventsElementContent = tripEventsElement.querySelector('.trip-events__list');
 
 
 // Модель
@@ -16,4 +17,5 @@ const tripPresenter = new TripPresenter({
   pointsModel
 });
 
+// console.log(tripEventsElement.firstElementChild === tripEventsElement.lastElementChild);
 tripPresenter.init();
