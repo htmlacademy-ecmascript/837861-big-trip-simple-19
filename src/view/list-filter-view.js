@@ -1,5 +1,6 @@
-import { createElement } from '../render.js';
-
+// import { createElement } from '../render.js';
+//Импортируем родительский абстрактный класс, от которого будем наследоваться
+import AbstractView from '../framework/view/abstract-view.js';
 // Функция для создания шаблона
 // Шаблон скопирован из разметки файла list-filter.html, заголовок Filter events
 function createListFilterTemplate() {
@@ -19,26 +20,9 @@ function createListFilterTemplate() {
 }
 
 // Экспортируем класс
-export default class ListFilterView {
-  #element = null;
+export default class ListEmptyView extends AbstractView {
   // Возвращаем разметку шаблона
   get template() {
     return createListFilterTemplate();
-  }
-
-  // Создаем элемент
-  get element() {
-    // Если свойство элемент не заполнено
-    if (!this.#element) {
-      // Мы заполняем свойство результатом createElement
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  // Предусматриваем метод для удаления элемента
-  removeElement() {
-    this.#element = null;
   }
 }

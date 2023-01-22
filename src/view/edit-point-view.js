@@ -1,5 +1,6 @@
-
-import { createElement } from '../render.js';
+// import { createElement } from '../render.js';
+//Импортируем родительский абстрактный класс, от которого будем наследоваться
+import AbstractView from '../framework/view/abstract-view.js';
 import { destinations, offersByTypes } from '../mock/mock.js';
 import dayjs from 'dayjs';
 
@@ -94,10 +95,13 @@ const createEditPointTemplate = ({ point }) => {
   </li>`;
 };
 
-export default class EditPointView {
-  #element = null;
+// export default class EditPointView {
+//   #element = null;
+
+export default class EditPointView extends AbstractView {
 
   constructor(point) {
+    super();
     this.point = point;
   }
 
@@ -105,15 +109,15 @@ export default class EditPointView {
     return createEditPointTemplate(this.point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  // get element() {
+  //   if (!this.#element) {
+  //     this.#element = createElement(this.template);
+  //   }
 
-    return this.#element;
-  }
+  //   return this.#element;
+  // }
 
-  removeElement() {
-    this.#element = null;
-  }
+  // removeElement() {
+  //   this.#element = null;
+  // }
 }

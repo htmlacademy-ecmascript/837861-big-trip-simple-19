@@ -1,5 +1,6 @@
-import { createElement } from '../render.js';
 import dayjs from 'dayjs';
+//Импортируем родительский абстрактный класс, от которого будем наследоваться
+import AbstractView from '../framework/view/abstract-view.js';
 
 function createPointOffersTemplate({ pointOffers, allOffers }) {
   if (pointOffers.length === 0) {
@@ -53,25 +54,14 @@ function createPointTemplate(data) {
   );
 }
 
-export default class PointView {
-  #element = null;
+export default class PointView extends AbstractView {
 
   constructor(data) {
+    super();
     this.data = data;
   }
 
   get template() {
     return createPointTemplate(this.data);
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

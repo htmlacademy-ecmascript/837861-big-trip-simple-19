@@ -1,7 +1,8 @@
 import { POINT_TYPES } from '../mock/const.js';
 import dayjs from 'dayjs';
 import { capitalizeFirstLetter } from '../utils.js';
-import { createElement } from '../render.js';
+//Импортируем родительский абстрактный класс, от которого будем наследоваться
+import AbstractView from '../framework/view/abstract-view.js';
 
 const BLANK_POINT = {
   basePrice: null,
@@ -140,10 +141,12 @@ function createPointEditTemplate(data) {
   );
 }
 
-export default class PointEditView {
-  #element = null;
+export default class PointEditView extends AbstractView {
+  // export default class PointEditView {
+  //   #element = null;
 
   constructor(data) {
+    super();
     this.data = data;
   }
 
@@ -151,14 +154,4 @@ export default class PointEditView {
     return createPointEditTemplate(this.data);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.element = createElement(this.template);
-    }
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
 }
