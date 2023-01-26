@@ -14,7 +14,9 @@ import NewPointView from '../view/new-point-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
 // Функция для определения истинности нажатия Escape
 import { isEscapeKey } from '../utils.js';
-import { render, RenderPosition } from '../render.js';
+import { RenderPosition } from '../render.js';
+//Импортируем render из папки framework
+import { render } from '../framework/render.js';
 
 export default class TripPresenter {
   #pointListComponent = new TripListView();
@@ -24,9 +26,9 @@ export default class TripPresenter {
   #filterContainer = null;
   #listPoints = [];
 
-  constructor({ boardContainer, filterContainer, pointsModel }) {
+  constructor({ boardContainer, pointsModel }) {
     this.#boardContainer = boardContainer;
-    this.#filterContainer = filterContainer;
+    // this.#filterContainer = filterContainer;
     this.#pointsModel = pointsModel;
   }
 
@@ -34,12 +36,6 @@ export default class TripPresenter {
     this.#listPoints = [...this.#pointsModel.points];
     this.#renderPointsList();
   }
-
-  // #renderPointsList() {
-  //   if (!this.#listPoints.length) {
-  //     render(new NewPointView(), this.#boardContainer);
-  //     return;
-  //   }
 
   #renderPointsList() {
     if (!this.#listPoints.length) {
@@ -54,41 +50,44 @@ export default class TripPresenter {
   }
 
   #renderPoint(point) {
-    const pointComponent = new PointView({ point });
-    const pointEditComponent = new EditPointView({ point });
+    const onEscKeyDown = (evt) => {
+      if (isEscapeKey(evt)) {
+        evt.preventDefault();
+        replaceEditFormToPoint();
 
-    // const tripEventsElement = document.querySelector('.trip-events');
-    const pointRollupButton = pointComponent.element.querySelector('.event__rollup-btn');
-    const editPointForm = pointEditComponent.element.querySelector('form');
-    // const editRollupButton = pointEditComponent.element.querySelector('event__rollup-btn');
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+
+    const pointComponent = new PointView({
+      point,
+      onRollupBtnClick: () => {
+        replacePointToEditForm.call(this);
+        document.addEventListener('keydown', onEscKeyDown);
+      }
+    });
+    const pointEditComponent = new EditPointView({
+      point,
+      onFormSubmit: () => {
+        replaceEditFormToPoint.call(this);
+        document.removeEventListener('keydown', onEscKeyDown);
+      },
+
+      onRollupBtnClick: () => {
+        replaceEditFormToPoint.call(this);
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    });
 
     const replacePointToEditForm = () => {
       this.#pointListComponent.element.replaceChild(pointEditComponent.element, pointComponent.element);
-      editPointForm.addEventListener('click', onCloseEditPointForm);
-      editPointForm.addEventListener('submit', onCloseEditPointForm);
-      document.addEventListener('keydown', onEscKeyDown);
     };
 
     const replaceEditFormToPoint = () => {
       this.#pointListComponent.element.replaceChild(pointComponent.element, pointEditComponent.element);
-      editPointForm.removeEventListener('click', onCloseEditPointForm);
-      editPointForm.removeEventListener('submit', onCloseEditPointForm);
-      document.removeEventListener('keydown', onEscKeyDown);
     };
 
-    function onEscKeyDown(evt) {
-      if (isEscapeKey(evt)) {
-        onCloseEditPointForm();
-      }
-    }
 
-    function onCloseEditPointForm() {
-      replaceEditFormToPoint();
-    }
-
-    pointRollupButton.addEventListener('click', () => {
-      replacePointToEditForm();
-    });
 
     render(pointComponent, this.#pointListComponent.element);
   }

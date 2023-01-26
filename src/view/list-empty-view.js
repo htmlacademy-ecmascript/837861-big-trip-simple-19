@@ -1,25 +1,14 @@
-import { createElement } from '../render.js';
+//Импортируем родительский абстрактный класс, от которого будем наследоваться
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createListEmptyElementTemplate = () =>
   ('<p class="trip-events__message">Click New Event to create first point</p>');
 
-export default class ListEmptyView {
-  #element = null;
+
+export default class ListEmptyView extends AbstractView {
 
   get template() {
     return createListEmptyElementTemplate();
   }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
-
 }
 

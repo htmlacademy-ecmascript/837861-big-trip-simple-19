@@ -1,5 +1,5 @@
-
-import { createElement } from '../render.js';
+//Импортируем родительский абстрактный класс, от которого будем наследоваться
+import AbstractView from '../framework/view/abstract-view.js';
 import { destinations, offersByTypes } from '../mock/mock.js';
 import dayjs from 'dayjs';
 
@@ -60,27 +60,39 @@ const createPointTemplate = (point) => {
     </li>`;
 };
 
-export default class PointView {
-  #element = null;
-  #point = null;
+// export default class PointView extends AbstractView {
+//   // export default class PointView {
+//   //   #element = null;
+//   #point = null;
 
-  constructor({ point }) {
+//   constructor({ point }) {
+//     super();
+//     this.#point = point;
+//   }
+
+//   get template() {
+//     return createPointTemplate(this.#point);
+//   }
+// }
+export default class PointView extends AbstractView {
+  #point = null;
+  #handleRollupBtnClick = null;
+
+  constructor({ point, onRollupBtnClick }) {
+    super();
     this.#point = point;
+    this.#handleRollupBtnClick = onRollupBtnClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#rollupBtnClickHandler);
   }
 
   get template() {
     return createPointTemplate(this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #rollupBtnClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleRollupBtnClick();
+  };
 }
