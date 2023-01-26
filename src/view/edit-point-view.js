@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 const DATE_FORMAT = 'DD/MM/YY HH:mm';
 
-const createEditPointTemplate = ({ point }) => {
+const createEditPointTemplate = (point) => {
   // Деструктурируем параметры
   const { type, offers, destination, basePrice, dateFrom, dateTo } = point;
   const pointTypeOffer = offersByTypes.find((offer) => offer.type === type);
@@ -95,29 +95,34 @@ const createEditPointTemplate = ({ point }) => {
   </li>`;
 };
 
-// export default class EditPointView {
-//   #element = null;
-
 export default class EditPointView extends AbstractView {
+  #point = null;
+  #handleFormSubmit = null;
+  #handleRollupBtnClick = null;
 
-  constructor(point) {
+  constructor({ point, onFormSubmit, onRollupBtnClick }) {
     super();
-    this.point = point;
+    this.#point = point;
+    this.#handleFormSubmit = onFormSubmit;
+    this.#handleRollupBtnClick = onRollupBtnClick;
+
+    this.element.querySelector('form')
+      .addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#rollupButtonClickHandler);
   }
 
   get template() {
-    return createEditPointTemplate(this.point);
+    return createEditPointTemplate(this.#point);
   }
 
-  // get element() {
-  //   if (!this.#element) {
-  //     this.#element = createElement(this.template);
-  //   }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
 
-  //   return this.#element;
-  // }
-
-  // removeElement() {
-  //   this.#element = null;
-  // }
+  #rollupButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleRollupBtnClick();
+  };
 }

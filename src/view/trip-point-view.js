@@ -60,17 +60,39 @@ const createPointTemplate = (point) => {
     </li>`;
 };
 
-export default class PointView extends AbstractView {
-  // export default class PointView {
-  //   #element = null;
-  #point = null;
+// export default class PointView extends AbstractView {
+//   // export default class PointView {
+//   //   #element = null;
+//   #point = null;
 
-  constructor({ point }) {
+//   constructor({ point }) {
+//     super();
+//     this.#point = point;
+//   }
+
+//   get template() {
+//     return createPointTemplate(this.#point);
+//   }
+// }
+export default class PointView extends AbstractView {
+  #point = null;
+  #handleRollupBtnClick = null;
+
+  constructor({ point, onRollupBtnClick }) {
     super();
     this.#point = point;
+    this.#handleRollupBtnClick = onRollupBtnClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#rollupBtnClickHandler);
   }
 
   get template() {
     return createPointTemplate(this.#point);
   }
+
+  #rollupBtnClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleRollupBtnClick();
+  };
 }

@@ -9,8 +9,6 @@ function createTripListTemplate() {
 }
 
 export default class TripListView extends AbstractView {
-  // export default class TripListView {
-  //   #element = null;
 
   get template() {
     return createTripListTemplate();

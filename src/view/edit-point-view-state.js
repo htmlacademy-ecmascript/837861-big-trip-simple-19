@@ -1,5 +1,3 @@
-
-// import { createElement } from '../render.js';
 //Импортируем родительский абстрактный класс, от которого будем наследоваться
 import AbstractView from '../framework/view/abstract-view.js';
 import { destinations, offersByTypes } from '../mock/mock.js';
@@ -103,7 +101,7 @@ export default class EditPointViewState extends AbstractView {
     return createEditPointTemplate();
   }
 
-  constructor(point) {
+  constructor({ point }) {
     super();
     this.#point = point;
   }
