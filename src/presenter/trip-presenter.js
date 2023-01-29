@@ -6,6 +6,8 @@ import SortView from '../view/list-sort-view.js';
 import EditPointView from '../view/edit-point-view.js';
 // Точка маршрута
 import PointView from '../view/trip-point-view.js';
+//Импортируем PointPresenter
+import PointPresenter from './point-presenter.js';
 // Фильтры
 // import ListFilterView from '../view/list-filter-view.js';
 // Форма создания
@@ -14,17 +16,16 @@ import NewPointView from '../view/new-point-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
 // Функция для определения истинности нажатия Escape
 import { isEscapeKey } from '../utils.js';
-import { RenderPosition } from '../render.js';
 //Импортируем render из папки framework
-import { render } from '../framework/render.js';
+import { render, RenderPosition } from '../framework/render.js';
 
 export default class TripPresenter {
   #pointListComponent = new TripListView();
   #boardContainer = null;
-  #pointContainer = null;
   #pointsModel = null;
-  #filterContainer = null;
   #listPoints = [];
+  #emptyListComponent = new ListEmptyView;
+  #pointPresenter = new Map();
 
   constructor({ boardContainer, pointsModel }) {
     this.#boardContainer = boardContainer;
@@ -37,58 +38,78 @@ export default class TripPresenter {
     this.#renderPointsList();
   }
 
+  #handleModeChange = () => {
+    this.#pointPresenter.forEach((presenter) => presenter.resetView());
+  };
+
   #renderPointsList() {
     if (!this.#listPoints.length) {
-      render(new ListEmptyView(), this.#boardContainer);
+      this.#renderEmptyList();
       return;
     }
 
-    render(new SortView(), this.#boardContainer);
+    // render(new SortView(), this.#boardContainer);
     render(this.#pointListComponent, this.#boardContainer);
     render(new NewPointView(), this.#pointListComponent.element, RenderPosition.AFTERBEGIN);
     this.#listPoints.forEach((point) => this.#renderPoint(point));
   }
 
+  #renderEmptyList = () => {
+    render(this.#emptyListComponent, this.#boardContainer);
+  };
+
   #renderPoint(point) {
-    const onEscKeyDown = (evt) => {
-      if (isEscapeKey(evt)) {
-        evt.preventDefault();
-        replaceEditFormToPoint();
-
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
-
-    const pointComponent = new PointView({
-      point,
-      onRollupBtnClick: () => {
-        replacePointToEditForm.call(this);
-        document.addEventListener('keydown', onEscKeyDown);
-      }
-    });
-    const pointEditComponent = new EditPointView({
-      point,
-      onFormSubmit: () => {
-        replaceEditFormToPoint.call(this);
-        document.removeEventListener('keydown', onEscKeyDown);
-      },
-
-      onRollupBtnClick: () => {
-        replaceEditFormToPoint.call(this);
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
+    const pointPresenter = new PointPresenter({
+      boardContainer: this.#boardContainer,
+      onModeChange: this.#handleModeChange
     });
 
-    const replacePointToEditForm = () => {
-      this.#pointListComponent.element.replaceChild(pointEditComponent.element, pointComponent.element);
-    };
-
-    const replaceEditFormToPoint = () => {
-      this.#pointListComponent.element.replaceChild(pointComponent.element, pointEditComponent.element);
-    };
+    pointPresenter.init(point);
+    this.#pointPresenter.set(point.id, pointPresenter);
 
 
+    // const onEscKeyDown = (evt) => {
+    //   if (isEscapeKey(evt)) {
+    //     evt.preventDefault();
+    //     replaceEditFormToPoint();
 
-    render(pointComponent, this.#pointListComponent.element);
+    //     document.removeEventListener('keydown', onEscKeyDown);
+    //   }
+    // };
+
+    // const pointComponent = new PointView({
+    //   point,
+    //   onRollupBtnClick: () => {
+    //     replacePointToEditForm.call(this);
+    //     document.addEventListener('keydown', onEscKeyDown);
+    //   }
+    // });
+    // const pointEditComponent = new EditPointView({
+    //   point,
+    //   onFormSubmit: () => {
+    //     replaceEditFormToPoint.call(this);
+    //     document.removeEventListener('keydown', onEscKeyDown);
+    //   },
+
+    //   onRollupBtnClick: () => {
+    //     replaceEditFormToPoint.call(this);
+    //     document.removeEventListener('keydown', onEscKeyDown);
+    //   }
+    // });
+
+    // const replacePointToEditForm = () => {
+    //   this.#pointListComponent.element.replaceChild(pointEditComponent.element, pointComponent.element);
+    // };
+
+    // const replaceEditFormToPoint = () => {
+    //   this.#pointListComponent.element.replaceChild(pointComponent.element, pointEditComponent.element);
+    // };
+
+    // render(pointComponent, this.#pointListComponent.element);
+  }
+
+  #clearPointList() {
+    this.#pointPresenter.forEach((presenter) => presenter.destroy());
+    this.#pointPresenter.clear();
   }
 }
