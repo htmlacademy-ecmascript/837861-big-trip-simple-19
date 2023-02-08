@@ -105,7 +105,7 @@ export default class TripPresenter {
   #handleModeChange = () => {
     this.#newPointPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
-    remove(this.#newPointPresenter); //here
+    remove(this.#newPointPresenter);
   };
 
   #handleViewAction = async (actionType, updateType, update) => {
