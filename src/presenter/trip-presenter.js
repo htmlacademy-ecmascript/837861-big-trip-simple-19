@@ -4,7 +4,7 @@ import TripListView from '../view/trip-list-view.js';
 import NoEventsView from '../view/no-events-view.js';
 import PointPresenter from './point-presenter.js';
 import { SortType, UpdateType, UserAction, FilterType } from '../const.js';
-import { sortPointDate, sortPointPrice} from '../utils/task.js';
+import { sortPointDate, sortPointPrice } from '../utils/task.js';
 import { filter } from '../utils/filters.js';
 import NewPointPresenter from './new-point-presenter.js';
 import LoadingView from '../view/loading-view.js';
@@ -83,7 +83,7 @@ export default class TripPresenter {
     this.#newPointPresenter.init();
   }
 
-  #createNewPointPresenter () {
+  #createNewPointPresenter() {
     this.#newPointPresenter = new NewPointPresenter({
       pointListContainer: this.#tripComponent.element,
       pointCommon: this.#pointCommon,
@@ -105,6 +105,7 @@ export default class TripPresenter {
   #handleModeChange = () => {
     this.#newPointPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
+    remove(this.#newPointPresenter);
   };
 
   #handleViewAction = async (actionType, updateType, update) => {
@@ -223,7 +224,7 @@ export default class TripPresenter {
   }
 
   #clearBoard({ resetSortType = false } = {}) {
-    if(this.#newPointPresenter){
+    if (this.#newPointPresenter) {
       this.#newPointPresenter.destroy();
     }
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
@@ -250,6 +251,7 @@ export default class TripPresenter {
     const pointsCount = this.points.length;
     if (pointsCount === 0 && !this.#isPointLoading) {
       this.#renderNoPoint();
+      return; //here
     }
     this.#renderSort();
     render(this.#tripComponent, this.#tripContainer);
