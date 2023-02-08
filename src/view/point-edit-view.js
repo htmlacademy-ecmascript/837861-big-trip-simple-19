@@ -164,7 +164,7 @@ function createPointEditTemplate(tripPoint, pointCommon) {
 
       <section class="event__section  event__section--destination">
        ${pointDestination ? '<h3 class="event__section-title  event__section-title--destination">Destination</h3>'
-      : '' }
+      : ''}
         <p class="event__destination-description">${he.encode(pointDestination ? pointDestination.description : '')}</p>
         <div class="event__photos-container">
           <div class="event__photos-tape">
@@ -190,7 +190,7 @@ export default class PointEditView extends AbstractStatefulView {
     ...BLANK_POINT,
     dateFrom: new Date(),
     dateTo: new Date(),
-  }, onFormSubmit, onFormClose, onDeleteClick, pointCommon}) {
+  }, onFormSubmit, onFormClose, onDeleteClick, pointCommon }) {
     super();
     this._setState(PointEditView.parsePointToState(point));
     this.#pointCommon = pointCommon;
@@ -215,8 +215,7 @@ export default class PointEditView extends AbstractStatefulView {
     }
     this.element.querySelector('.event__reset-btn')
       .addEventListener('click', this.#deleteClickHandler);
-    if (this.#pointCommon.allOffers.find((offerTypes) => offerTypes.type === this._state.type).offers)
-    {
+    if (this.#pointCommon.allOffers.find((offerTypes) => offerTypes.type === this._state.type).offers) {
       this.element.querySelector('.event__available-offers')
         .addEventListener('change', this.#offerChangeHandler);
     }
@@ -303,6 +302,7 @@ export default class PointEditView extends AbstractStatefulView {
         dateFormat: 'd/m/y H:i',
         enableTime: true,
         defaultDate: this._state.dateFrom,
+        minDate: this._state.dateFrom, // here
         onChange: this.#dateFromChangeHandler,
         // eslint-disable-next-line camelcase
         time_24hr: true

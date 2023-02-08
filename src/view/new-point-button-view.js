@@ -1,4 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
+// import NoEventsView from './no-events-view.js';
 
 function createNewPointButtonTemplate() {
   return '<button class="trip-main__event-add-btn  btn  btn--big  btn--yellow" type="button">New event</button>';
@@ -6,6 +7,7 @@ function createNewPointButtonTemplate() {
 
 export default class NewPointButtonView extends AbstractView {
   #handleClick = null;
+
 
   constructor({ onClick }) {
     super();
