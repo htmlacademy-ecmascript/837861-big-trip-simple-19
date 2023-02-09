@@ -105,6 +105,7 @@ export default class TripPresenter {
   #handleModeChange = () => {
     this.#newPointPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
+    remove(this.#newPointPresenter);
   };
 
   #handleViewAction = async (actionType, updateType, update) => {
@@ -250,6 +251,7 @@ export default class TripPresenter {
     const pointsCount = this.points.length;
     if (pointsCount === 0 && !this.#isPointLoading) {
       this.#renderNoPoint();
+      return; //here
     }
     this.#renderSort();
     render(this.#tripComponent, this.#tripContainer);

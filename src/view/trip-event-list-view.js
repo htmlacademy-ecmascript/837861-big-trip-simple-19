@@ -23,7 +23,8 @@ function createTripEventListTemplate(tripPoint, pointCommon) {
             &plus;&euro;&nbsp;
             <span class="event__offer-price">${he.encode(String(selectedOffer.price))}</span>
           </li>`
-        );}).join('');
+        );
+      }).join('');
     }
 
     return template;
@@ -31,7 +32,6 @@ function createTripEventListTemplate(tripPoint, pointCommon) {
   };
 
   return (`
-    <ul class="trip-events__list">
       <li class="trip-events__item">
         <div class="event">
           <time class="event__date" datetime="${he.encode(String(dateFrom))}">${humanizeEventDate(he.encode(String(dateFrom)))}</time>
@@ -58,7 +58,6 @@ function createTripEventListTemplate(tripPoint, pointCommon) {
           </button>
         </div>
       </li>
-    </ul>
   `
   );
 }
