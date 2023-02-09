@@ -302,7 +302,7 @@ export default class PointEditView extends AbstractStatefulView {
         dateFormat: 'd/m/y H:i',
         enableTime: true,
         defaultDate: this._state.dateFrom,
-        minDate: this._state.dateFrom, //here
+        maxDate: this._state.dateTo, //here
         onChange: this.#dateFromChangeHandler,
         // eslint-disable-next-line camelcase
         time_24hr: true
