@@ -81,6 +81,7 @@ export default class TripPresenter {
     this.#currentSortType = SortType.DATE;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
     this.#newPointPresenter.init();
+    this.#hideNoEventsMessage();
   }
 
   #createNewPointPresenter() {
@@ -97,10 +98,23 @@ export default class TripPresenter {
       filterType: this.#filterType
     });
 
+
     render(this.#noPointComponent,
       this.#tripComponent.element,
       RenderPosition.AFTERBEGIN);
   }
+
+  #hideNoEventsMessage = () => {
+    remove(this.#noPointComponent);
+  };
+
+  //-------------------------------------------
+  #showEventsMessage = () => {
+    if (!this.#apiModel.points.length) {
+      this.#renderNoPoint();
+    }
+  };
+  //---------------------------------------------
 
   #handleModeChange = () => {
     this.#newPointPresenter.destroy();
@@ -142,6 +156,7 @@ export default class TripPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
+    this.#showEventsMessage();
     switch (updateType) {
       case UpdateType.PATCH:
         this.#pointPresenter.get(data.id).init(data);
@@ -176,6 +191,7 @@ export default class TripPresenter {
       this.#clearBoard();
       this.#renderBoard();
     }
+
   };
 
   #handleSortTypeChange = (sortType) => {

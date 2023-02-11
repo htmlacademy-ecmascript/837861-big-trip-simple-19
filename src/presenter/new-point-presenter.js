@@ -1,16 +1,15 @@
 import { remove, render, RenderPosition } from '../framework/render.js';
 import PointEditView from '../view/point-edit-view.js';
-import { UserAction, UpdateType} from '../const.js';
+import { UserAction, UpdateType } from '../const.js';
 
 export default class NewPointPresenter {
   #pointListContainer = null;
   #handleDataChange = null;
   #handleDestroy = null;
-
   #pointEditComponent = null;
   #pointCommon = null;
 
-  constructor({pointListContainer, pointCommon, onDataChange, onDestroy}) {
+  constructor({ pointListContainer, pointCommon, onDataChange, onDestroy }) {
     this.#pointListContainer = pointListContainer;
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
