@@ -46,11 +46,13 @@ const newPointButtonComponent = new NewPointButtonView({
 
 function handleNewPointFormClose() {
   newPointButtonComponent.element.disabled = false;
+  tripPresenter.showNoEventsMessage();
 }
 
 function handleNewPointButtonClick() {
   tripPresenter.createPoint();
   newPointButtonComponent.element.disabled = true;
+  tripPresenter.hideNoEventsMessage();
 }
 
 filterPresenter.init();
