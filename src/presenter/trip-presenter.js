@@ -81,7 +81,6 @@ export default class TripPresenter {
     this.#currentSortType = SortType.DATE;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
     this.#newPointPresenter.init();
-    // this.#hideNoEventsMessage();
   }
 
   #createNewPointPresenter() {
@@ -262,10 +261,10 @@ export default class TripPresenter {
     const pointsCount = this.points.length;
     if (pointsCount === 0 && !this.#isPointLoading) {
       this.#renderNoPoint();
-      return; //here
+      return;
     }
     this.#renderSort();
     render(this.#tripComponent, this.#tripContainer);
-    this.#renderPoints(points); // here
+    this.#renderPoints(points);
   }
 }
